@@ -1,19 +1,30 @@
 import axios from 'axios';
-// 2920e79ecb69615942f50e6b434f2cc469f763c8
+// dc5ec214025094a7add334a4190abb3af6070606
+import types from "./types";
+
 export const login = (token) => {
+  const savedToken = localStorage.getItem('gitToken');
   return (dispatch) => {
     axios.get('https://api.github.com/user',{
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.github.v3.raw',
-        "Authorization": "token " + token
+        "Authorization": "token " + savedToken ? savedToken : token
       }
     })
       .then(res => {
-        console.log(res.data)
-        dispatch(res.data)
+        localStorage.setItem('gitToken', token);
+        dispatch({
+          type: types.LOGIN_REQUEST,
+          user: res.data
+        })
       })
-      .catch(err => new Error(err))
+      .catch(err => {
+        dispatch({
+          type: types.LOGIN_ERROR,
+          error: err.message
+        })
+      })
   }
 }
 

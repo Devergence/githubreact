@@ -14,6 +14,10 @@ const StyledForm = styled.form`
   padding: 40px;
 `
 
+const StyledError = styled.p`
+  color: red;
+`
+
 const StyledInput = styled.div`
   width: 100%;
   
@@ -41,7 +45,7 @@ const StyledButton = styled.button`
   }
 `
 
-export const Form = () => {
+export const Form = ({error}) => {
   const [token, setToken] = useState('');
   const [disable, setDisabled] = useState(true);
   const dispatch = useDispatch();
@@ -69,6 +73,7 @@ export const Form = () => {
     <StyledForm onSubmit={submitHandler}>
       <StyledInput>
         <input type="text" onChange={inputHandler} value={token} placeholder='enter your github token'/>
+        {error && <StyledError>{error}</StyledError>}
       </StyledInput>
       <StyledButton disabled={disable}>Sign-In</StyledButton>
     </StyledForm>

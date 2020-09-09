@@ -7,6 +7,7 @@ import {store} from "./store/configStore";
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { LoadingSpinner } from './components/ui/LoadingSpinner/LoadingSpinner';
 import { GlobalStyle } from "./utils/GlobalStyles";
+import {Header} from "./components/ui/Header/Header";
 
 const MainPage = lazy(() => import('./Pages/Main'));
 const LoginPage = lazy(() => import('./Pages/Login'));
@@ -15,6 +16,7 @@ const history = createBrowserHistory();
 ReactDOM.render(
   <Provider store={store}>
     <GlobalStyle />
+    <Header />
     <Router history={history}>
       <Suspense fallback={ <LoadingSpinner /> } >
         <Switch>

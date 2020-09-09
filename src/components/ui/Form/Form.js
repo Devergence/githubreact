@@ -36,21 +36,32 @@ const StyledButton = styled.button`
   :hover {
     background-color: #f1f8ff;
   }
+  :disabled {
+    cursor: not-allowed;
+  }
 `
 
 export const Form = () => {
   const [token, setToken] = useState('');
+  const [disable, setDisabled] = useState(true);
   const dispatch = useDispatch();
 
   const inputHandler = (e) => {
     const {value} = e.target;
-    if(value.length < 1) return;
+    if(value.length >= 16){
+      setDisabled(false);
+    }
     setToken(value);
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(token));
+    setDisabled(false);
+    if(token.length < 16 || token.match(/^[ ]+$/)){
+      setDisabled(true);
+      return;
+    }
+    dispatch(login(token.trim()));
     setToken('');
   }
 
@@ -59,7 +70,7 @@ export const Form = () => {
       <StyledInput>
         <input type="text" onChange={inputHandler} value={token} placeholder='enter your github token'/>
       </StyledInput>
-      <StyledButton>Sign-In</StyledButton>
+      <StyledButton disabled={disable}>Sign-In</StyledButton>
     </StyledForm>
   );
 };

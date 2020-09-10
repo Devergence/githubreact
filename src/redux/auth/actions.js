@@ -1,15 +1,13 @@
 import axios from 'axios';
-// dc5ec214025094a7add334a4190abb3af6070606
 import types from "./types";
 
 export const login = (token) => {
-  const savedToken = localStorage.getItem('gitToken');
   return (dispatch) => {
     axios.get('https://api.github.com/user',{
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.github.v3.raw',
-        "Authorization": "token " + savedToken ? savedToken : token
+        "Authorization": "token " + token
       }
     })
       .then(res => {
@@ -28,13 +26,10 @@ export const login = (token) => {
   }
 }
 
-export const getRepos = (page= 1) => {
-  return (dispatch) => {
-    axios.get(`https://api.github.com/repositories?since=${page}`)
-      .then(res => {
-        console.log(res.data)
-        dispatch(res.data)
-      })
-      .catch(err => new Error(err))
+export const logout = (dispatch) => {
+  return dispatch => {
+    dispatch({
+      type: types.LOGOUT,
+    })
   }
 }

@@ -8,8 +8,11 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { LoadingSpinner } from './components/ui/LoadingSpinner/LoadingSpinner';
 import { GlobalStyle } from "./utils/GlobalStyles";
 import {Header} from "./components/ui/Header/Header";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 const MainPage = lazy(() => import('./Pages/Main'));
+const PublicReposPage = lazy(() => import('./Pages/PublicRepos'));
+const AuthReposPage = lazy(() => import('./Pages/AuthRepos'));
 const LoginPage = lazy(() => import('./Pages/Login'));
 const history = createBrowserHistory();
 
@@ -20,10 +23,11 @@ ReactDOM.render(
     <Router history={history}>
       <Suspense fallback={ <LoadingSpinner /> } >
         <Switch>
-          <Route path="/repos" component={MainPage} exact/>
+          <Route path="/public" component={PublicReposPage} exact/>
+          <Route path="/" component={MainPage} exact/>
+          <PrivateRoute path="/authRepos" component={AuthReposPage} exact/>
           <Route path="/login" component={LoginPage} />
-          <Route path="/repos/:id" component={()=>{}} />
-          <Redirect from="/" to="/repos" exact />
+          <Redirect to="/" />
         </Switch>
       </Suspense>
     </Router>

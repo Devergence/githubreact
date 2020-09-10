@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 
 const StyledFormWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;

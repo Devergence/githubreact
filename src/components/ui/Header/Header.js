@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory, useRouteMatch  } from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const StyledHeader = styled.div`
   display: flex;
@@ -33,13 +34,15 @@ const StyledLinks = styled.div`
 const Header = () => {
   let history = useHistory();
   let match = useRouteMatch("/public");
+  let userSelector = useSelector(state => state.auth.user.login)
 
   return (
     <StyledHeader>
-      <StyledLinks onClick={()=>history.push("/login")}>Авторизация</StyledLinks>
-      <StyledLinks onClick={()=>history.push("/public")}>Без авторизации</StyledLinks>
+      <StyledLinks onClick={()=>history.push("/login")}>{ userSelector || 'Авторизация' }</StyledLinks>
       {
-        match && <StyledLinks onClick={()=>history.push("/")}>На Главную</StyledLinks>
+        match
+          ? <StyledLinks onClick={()=>history.push("/")}>На Главную</StyledLinks>
+          : <StyledLinks onClick={()=>history.push("/public")}>Без авторизации</StyledLinks>
       }
     </StyledHeader>
   );

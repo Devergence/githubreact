@@ -25,6 +25,23 @@ export const reposReducer = (state = initialState, action) => {
         error: action.error,
         isLoading: false,
       };
+    case types.GET_AUTH_REPOS_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case types.GET_AUTH_REPOS_REQUEST_SUCCESS:
+      return {
+        ...state,
+        authRepos: action.authRepos,
+        isLoading: false,
+      };
+    case types.GET_AUTH_REPOS_REQUEST_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
     default:
       return state;
   }

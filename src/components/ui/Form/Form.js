@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {login} from "../../../redux/auth/actions";
 import styled from 'styled-components';
+import { useHistory  } from "react-router-dom";
 
 const StyledForm = styled.form`
   display: flex;
@@ -49,6 +50,7 @@ export const Form = ({error}) => {
   const [token, setToken] = useState('');
   const [disable, setDisabled] = useState(true);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const inputHandler = (e) => {
     const {value} = e.target;
@@ -67,6 +69,7 @@ export const Form = ({error}) => {
     }
     dispatch(login(token.trim()));
     setToken('');
+    history.push('/authRepos')
   }
 
   return (

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import { Route, Redirect } from 'react-router-dom';
 
 export const PrivateRoute = ({isAuth, component:Component, ...rest}) => {
-  const isLogged = useSelector(state => state.auth.isAuth);
+  const isSaved = localStorage.getItem('gitToken');
+
   return (
-    <Route {...rest} component={(props) => (isLogged ? (<Component {...props}/>): (<Redirect to='/'/>))}/>
+    <Route {...rest} component={(props) => (isSaved ? (<Component {...props}/>) : (<Redirect to='/login'/>))}/>
   );
 };

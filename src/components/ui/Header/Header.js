@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <StyledLinks>Авторизация</StyledLinks>
+      <StyledLinks onClick={()=>history.push("/login")}>Авторизация</StyledLinks>
       <StyledLinks onClick={()=>history.push("/public")}>Без авторизации</StyledLinks>
       {
         match && <StyledLinks onClick={()=>history.push("/")}>На Главную</StyledLinks>

@@ -23,6 +23,7 @@ export const PaginationItem = ({counter}) => {
 
   const pageHandler = () =>{
     dispatch(getRepos(counter))
+    window.scrollTo(0, 0);
   }
 
   return (

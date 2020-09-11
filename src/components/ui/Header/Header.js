@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory, useRouteMatch  } from "react-router-dom";
 
 const StyledHeader = styled.div`
   display: flex;
@@ -24,16 +25,24 @@ const StyledLinks = styled.div`
     background: #853333;
   }
   
-  :first-child {
+  :not(:last-child) {
     margin-right: 20px;
   }
 `
 
-export const Header = () => {
+const Header = () => {
+  let history = useHistory();
+  let match = useRouteMatch("/public");
+
   return (
     <StyledHeader>
       <StyledLinks>Авторизация</StyledLinks>
-      <StyledLinks>Без авторизации</StyledLinks>
+      <StyledLinks onClick={()=>history.push("/public")}>Без авторизации</StyledLinks>
+      {
+        match && <StyledLinks onClick={()=>history.push("/")}>На Главную</StyledLinks>
+      }
     </StyledHeader>
   );
 };
+
+export default Header;
